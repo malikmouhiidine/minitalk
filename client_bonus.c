@@ -26,11 +26,27 @@ void	send_char(pid_t server_pid, unsigned char c)
 	}
 }
 
+void	signal_handler(int signal, siginfo_t *info, void *ctx)
+{
+	(void)info;
+	(void)ctx;
+	if (signal == SIGUSR1)
+		printf("Bit 1 delivired successfully!\n");
+	else if (signal == SIGUSR2)
+		printf("Bit 0 delivired successfully!\n");
+}
+
 int	main(int argc, char **argv)
 {
-	char		*msg;
-	pid_t		server_pid;
+	char							*msg;
+	struct sigaction	sa;
+	pid_t							server_pid;
 
+	sa.sa_sigaction = &signal_handler;
+	sa.sa_flags = SA_SIGINFO;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	if (argc != 3)
 		exit_handler();
 	server_pid = atoi(argv[1]);
