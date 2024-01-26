@@ -6,7 +6,7 @@
 /*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:15:20 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/26 18:57:51 by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/26 19:18:13 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	signal_handler(int signal, siginfo_t *info, void *ctx)
 	(void)info;
 	(void)ctx;
 	if (signal == SIGUSR1)
-		ft_putstr_fd("Message received successfully", 1);
+		ft_putstr_fd("Message received successfully\n", 1);
 }
 
 int	main(int argc, char **argv)
