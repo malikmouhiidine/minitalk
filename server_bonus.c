@@ -6,11 +6,10 @@
 /*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:19:40 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/26 10:01:19 by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/26 11:00:11 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
 
@@ -75,6 +74,7 @@ int	main(void)
 	sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
 	ft_putnbr_fd(getpid(), 1);
+	ft_putstr_fd("\n", 1);
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
