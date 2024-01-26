@@ -6,7 +6,7 @@
 /*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 19:16:26 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/26 21:12:06 by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/26 21:32:30 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	main(int argc, char **argv)
 		exit(1);
 	}
 	server_pid = ft_atoi(argv[1]);
-	if (server_pid <= 0 && !valid_pid(argv[1]) && kill(server_pid, 0) != -1)
+	if (server_pid <= 0 || !valid_pid(argv[1]) || kill(server_pid, 0) != -1)
 	{
 		ft_putstr_fd("Usage: ./client <pid> <msg>\n", 2);
 		exit(1);
