@@ -6,13 +6,13 @@
 /*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 21:14:35 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/26 21:15:02 by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/26 21:23:07 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BONUS_H
 # define BONUS_H
 
-int ft_atoi(char *str);
+int	ft_atoi(char *str);
 
 #endif
