@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmouhiid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/26 09:15:20 by mmouhiid          #+#    #+#             */
+/*   Updated: 2024/01/26 09:15:43 by mmouhiid         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
 #include <stdio.h>
 
-void	exit_handler()
+void	exit_handler(void)
 {
 	printf("Usage: ./client <pid> <msg>\n");
 	exit(1);
@@ -12,7 +24,7 @@ void	exit_handler()
 void	send_char(pid_t server_pid, unsigned char c)
 {
 	int						i;
-	unsigned char	curr_bit;
+	unsigned char			curr_bit;
 
 	i = 7;
 	while (i >= 0)
@@ -39,7 +51,7 @@ void	signal_handler(int signal, siginfo_t *info, void *ctx)
 int	main(int argc, char **argv)
 {
 	char							*msg;
-	struct sigaction	sa;
+	struct sigaction				sa;
 	pid_t							server_pid;
 
 	sa.sa_sigaction = &signal_handler;

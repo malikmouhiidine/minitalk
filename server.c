@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmouhiid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/26 09:15:03 by mmouhiid          #+#    #+#             */
+/*   Updated: 2024/01/26 09:15:10 by mmouhiid         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
@@ -6,7 +18,7 @@
 void	signal_handler(int signal, siginfo_t *info, void *ctx)
 {
 	static int						bit_i;
-	static unsigned char	curr_char;
+	static unsigned char			curr_char;
 	static pid_t					c_pid;
 
 	(void)ctx;

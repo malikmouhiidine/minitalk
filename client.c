@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmouhiid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/26 09:14:35 by mmouhiid          #+#    #+#             */
+/*   Updated: 2024/01/26 09:14:50 by mmouhiid         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
 #include <stdio.h>
 
-void	exit_handler()
+void	exit_handler(void)
 {
 	printf("Usage: ./client <pid> <msg>\n");
 	exit(1);
@@ -12,7 +24,7 @@ void	exit_handler()
 void	send_char(pid_t server_pid, unsigned char c)
 {
 	int						i;
-	unsigned char	curr_bit;
+	unsigned char			curr_bit;
 
 	i = 7;
 	while (i >= 0)
