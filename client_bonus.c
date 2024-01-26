@@ -6,13 +6,14 @@
 /*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:15:20 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/26 20:52:19 by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/26 21:14:13 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
+#include "bonus.h"
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -55,7 +56,10 @@ void	send_char(pid_t server_pid, unsigned char c)
 			signal = SIGUSR1;
 		usleep(600);
 		if (kill(server_pid, signal) == -1)
-			exit_handler();
+		{
+			ft_putstr_fd("Usage: ./client <pid> <msg>\n", 2);
+			exit(1);
+		}
 	}
 }
 
@@ -83,7 +87,7 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("Usage: ./client <pid> <msg>\n", 2);
 		exit(1);
 	}
-	server_pid = atoi(argv[1]);
+	server_pid = ft_atoi(argv[1]);
 	if (server_pid <= 0 && !valid_pid(argv[1]) && kill(server_pid, 0) != -1)
 	{
 		ft_putstr_fd("Usage: ./client <pid> <msg>\n", 2);

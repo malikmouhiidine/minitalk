@@ -1,6 +1,6 @@
 NAME = minitalk
 SRC = server.c client.c
-BONUS_SRC = server_bonus.c client_bonus.c
+BONUS_SRC = server_bonus.c client_bonus.c ft_atoi.c
 OBJ = $(SRC:.c=.o)
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
 CC = cc
@@ -16,13 +16,13 @@ server: server.o
 client: client.o
 	$(CC) $< -o $@
 
-bonus: server_bonus client_bonus
+bonus: server_bonus client_bonus bonus.h
 
 server_bonus: server_bonus.o
 	$(CC) $< -o $@
 
-client_bonus: client_bonus.o
-	$(CC) $< -o $@
+client_bonus: client_bonus.o ft_atoi.o
+	$(CC) $< -o $@ ft_atoi.o
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

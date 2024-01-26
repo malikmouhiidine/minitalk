@@ -6,7 +6,7 @@
 /*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 19:16:26 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/26 19:16:28 by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/26 21:12:06 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,28 @@ int	valid_pid(char *pid)
 	return (1);
 }
 
-void	exit_handler(void)
+int	ft_atoi(char *str)
 {
-	ft_putstr_fd("Usage: ./client <pid> <msg>\n", 2);
-	exit(1);
+	int		i;
+	int		sign;
+	long	res;
+
+	i = 0;
+	sign = 1;
+	res = 0;
+	while (*(str + i) == ' ' || *(str + i) == '\t' || *(str + i) == '\n'
+		|| *(str + i) == '\v' || *(str + i) == '\f' || *(str + i) == '\r')
+		i++;
+	if (*(str + i) == '-')
+		sign = -1;
+	if (*(str + i) == '-' || *(str + i) == '+')
+		i++;
+	while (*(str + i) && *(str + i) >= '0' && *(str + i) <= '9')
+	{
+		res = res * 10 + (*(str + i) - '0');
+		i++;
+	}
+	return (res * sign);
 }
 
 void	send_char(pid_t server_pid, unsigned char c)
@@ -61,7 +79,10 @@ void	send_char(pid_t server_pid, unsigned char c)
 			signal = SIGUSR1;
 		usleep(600);
 		if (kill(server_pid, signal) == -1)
-			exit_handler();
+		{
+			ft_putstr_fd("Usage: ./client <pid> <msg>\n", 2);
+			exit(1);
+		}
 	}
 }
 
@@ -71,10 +92,16 @@ int	main(int argc, char **argv)
 	pid_t		server_pid;
 
 	if (argc != 3)
-		exit_handler();
-	server_pid = atoi(argv[1]);
+	{
+		ft_putstr_fd("Usage: ./client <pid> <msg>\n", 2);
+		exit(1);
+	}
+	server_pid = ft_atoi(argv[1]);
 	if (server_pid <= 0 && !valid_pid(argv[1]) && kill(server_pid, 0) != -1)
-		exit_handler();
+	{
+		ft_putstr_fd("Usage: ./client <pid> <msg>\n", 2);
+		exit(1);
+	}
 	msg = argv[2];
 	while (*msg)
 		send_char(server_pid, *(msg++));
