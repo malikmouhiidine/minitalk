@@ -6,7 +6,7 @@
 /*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 21:13:44 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/26 21:23:23 by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/26 21:24:38 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 int	ft_atoi(char *str)
 {
 	int		i;
-	int		sign;
 	long	res;
+	int		sign;
 
 	i = 0;
-	sign = 1;
 	res = 0;
+	sign = 1;
 	while (*(str + i) == ' ' || *(str + i) == '\t' || *(str + i) == '\n'
 		|| *(str + i) == '\v' || *(str + i) == '\f' || *(str + i) == '\r')
 		i++;
