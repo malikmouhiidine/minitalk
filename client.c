@@ -6,7 +6,7 @@
 /*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:14:35 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/26 10:59:35 by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/26 17:52:31 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,20 @@ void	ft_putstr_fd(char *s, int fd)
 		return ;
 	while (*(s + i))
 		write(fd, (s + i++), 1);
+}
+
+int	valid_pid(char *pid)
+{
+	int	i;
+
+	i = 0;
+	while (*(pid + i))
+	{
+		if (*(pid + i) < '0' || *(pid + i) > '9')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 void	exit_handler(void)
@@ -44,7 +58,7 @@ void	send_char(pid_t server_pid, unsigned char c)
 			kill(server_pid, SIGUSR2);
 		else
 			kill(server_pid, SIGUSR1);
-		usleep(50);
+		usleep(100);
 	}
 }
 
@@ -56,7 +70,7 @@ int	main(int argc, char **argv)
 	if (argc != 3)
 		exit_handler();
 	server_pid = atoi(argv[1]);
-	if (server_pid <= -1)
+	if (server_pid <= 0 && !valid_pid(argv[1]) && kill(server_pid, 0) != -1)
 		exit_handler();
 	msg = argv[2];
 	while (*msg)

@@ -8,13 +8,21 @@ CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) -o server server.o
-	$(CC) -o client client.o
+$(NAME): server client
 
-bonus: $(BONUS_OBJ)
-	$(CC) -o server_bonus server_bonus.o
-	$(CC) -o client_bonus client_bonus.o
+server: server.o
+	$(CC) $< -o $@
+
+client: client.o
+	$(CC) $< -o $@
+
+bonus: server_bonus client_bonus
+
+server_bonus: server_bonus.o
+	$(CC) $< -o $@
+
+client_bonus: client_bonus.o
+	$(CC) $< -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
