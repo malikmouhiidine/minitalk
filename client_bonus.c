@@ -6,7 +6,7 @@
 /*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:15:20 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/26 17:52:19 by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/26 18:50:16 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	send_char(pid_t server_pid, unsigned char c)
 			kill(server_pid, SIGUSR2);
 		else
 			kill(server_pid, SIGUSR1);
-		usleep(100);
+		usleep(650);
 	}
 }
 
