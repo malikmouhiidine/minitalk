@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/26 09:14:35 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/26 18:36:08 mmouhiid         ###   ########.fr       */
+/*   Created: 2024/01/26 19:16:26 by mmouhiid          #+#    #+#             */
+/*   Updated: 2024/01/26 19:16:28 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,19 @@ void	send_char(pid_t server_pid, unsigned char c)
 {
 	int						i;
 	unsigned char			curr_bit;
+	int						signal;
 
 	i = 7;
 	while (i >= 0)
 	{
 		curr_bit = (c >> i--) % 2;
 		if (curr_bit == 0)
-			kill(server_pid, SIGUSR2);
+			signal = SIGUSR2;
 		else
-			kill(server_pid, SIGUSR1);
-		usleep(650);
+			signal = SIGUSR1;
+		usleep(600);
+		if (kill(server_pid, signal) == -1)
+			exit_handler();
 	}
 }
 

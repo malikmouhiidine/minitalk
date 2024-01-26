@@ -6,7 +6,7 @@
 /*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:15:03 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/26 13:07:43 by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/26 19:01:16 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ void	signal_handler(int signal, siginfo_t *info, void *ctx)
 	bit_i++;
 	if (bit_i == 8)
 	{
-		if (curr_char == '\0')
-			ft_putstr_fd("\n", 1);
-		else
+		if (curr_char != '\0')
 			write(1, &curr_char, 1);
 		bit_i = 0;
 		curr_char = 0;
