@@ -3,17 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmouhiid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:19:40 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/26 09:19:43 by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:01:19 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
-#include <stdio.h>
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (*(s + i))
+		write(fd, (s + i++), 1);
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	if (n < 0)
+	{
+		write(fd, "-", 1);
+		n *= -1;
+	}
+	if (n >= 10)
+		ft_putnbr_fd(n / 10, fd);
+	n = n % 10 + '0';
+	write(fd, &n, 1);
+}
 
 void	signal_handler(int signal, siginfo_t *info, void *ctx)
 {
@@ -32,9 +55,9 @@ void	signal_handler(int signal, siginfo_t *info, void *ctx)
 	if (++bit_i == 8)
 	{
 		if (curr_char == '\0')
-			printf("\n");
+			ft_putstr_fd("\n", 1);
 		else
-			printf("%c", curr_char);
+			write(1, &curr_char, 1);
 		bit_i = 0;
 		curr_char = 0;
 	}
@@ -51,7 +74,7 @@ int	main(void)
 	sa.sa_sigaction = &signal_handler;
 	sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
-	printf("%d\n", getpid());
+	ft_putnbr_fd(getpid(), 1);
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)

@@ -3,21 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmouhiid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:15:20 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/26 09:15:43 by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:01:00 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
-#include <stdio.h>
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (*(s + i))
+		write(fd, (s + i++), 1);
+}
 
 void	exit_handler(void)
 {
-	printf("Usage: ./client <pid> <msg>\n");
+	ft_putstr_fd("Usage: ./client <pid> <msg>\n", 2);
 	exit(1);
 }
 
@@ -43,9 +53,9 @@ void	signal_handler(int signal, siginfo_t *info, void *ctx)
 	(void)info;
 	(void)ctx;
 	if (signal == SIGUSR1)
-		printf("Bit 1 delivired successfully!\n");
+		ft_putstr_fd("Bit 1 delivired successfully!\n", 1);
 	else if (signal == SIGUSR2)
-		printf("Bit 0 delivired successfully!\n");
+		ft_putstr_fd("Bit 0 delivired successfully!\n", 1);
 }
 
 int	main(int argc, char **argv)
