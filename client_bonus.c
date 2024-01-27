@@ -6,25 +6,12 @@
 /*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:15:20 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/27 12:40:14 by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/27 15:35:12 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <signal.h>
-#include <unistd.h>
 #include "bonus.h"
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return ;
-	while (*(s + i))
-		write(fd, (s + i++), 1);
-}
 
 int	valid_pid(char *pid)
 {
@@ -56,10 +43,7 @@ void	send_char(pid_t server_pid, unsigned char c)
 			signal = SIGUSR1;
 		usleep(600);
 		if (kill(server_pid, signal) == -1)
-		{
-			ft_putstr_fd("Usage: ./client <pid> <msg>\n", 2);
-			exit(1);
-		}
+			exit_handler();
 	}
 }
 
@@ -83,19 +67,14 @@ int	main(int argc, char **argv)
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	if (argc != 3)
-	{
-		ft_putstr_fd("Usage: ./client <pid> <msg>\n", 2);
-		exit(1);
-	}
+		exit_handler();
 	server_pid = ft_atoi(argv[1]);
 	if (server_pid <= 0 || !valid_pid(argv[1]) || kill(server_pid, 0) == -1)
-	{
-		ft_putstr_fd("Usage: ./client <pid> <msg>\n", 2);
-		exit(1);
-	}
+		exit_handler();
 	msg = argv[2];
 	while (*msg)
 		send_char(server_pid, *(msg++));
 	send_char(server_pid, '\0');
+	usleep(100);
 	return (0);
 }
