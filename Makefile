@@ -18,10 +18,10 @@ client: client.o
 
 bonus: server_bonus client_bonus bonus.h
 
-server_bonus: server_bonus.o
+server_bonus: server_bonus.o bonus.h
 	$(CC) $< -o $@
 
-client_bonus: client_bonus.o utils.o
+client_bonus: client_bonus.o utils.o bonus.h
 	$(CC) $< -o $@ utils.o
 
 %.o: %.c
