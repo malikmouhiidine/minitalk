@@ -6,23 +6,11 @@
 /*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 09:19:40 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/28 17:26:58by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:36:31 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <unistd.h>
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return ;
-	while (*(s + i))
-		write(fd, (s + i++), 1);
-}
+#include "bonus.h"
 
 void	ft_putnbr_fd(int n, int fd)
 {
@@ -35,6 +23,34 @@ void	ft_putnbr_fd(int n, int fd)
 		ft_putnbr_fd(n / 10, fd);
 	n = n % 10 + '0';
 	write(fd, &n, 1);
+}
+
+void	print_char_uni(unsigned char c, pid_t pid)
+{
+	int						i;
+	static int				a;
+	static int				b;
+	static pid_t			prev_pid;
+	static unsigned char	bytes[4];
+
+	if (prev_pid != pid)
+	{
+		a = 0;
+		b = 0;
+		prev_pid = pid;
+	}
+	if (a == 0)
+		a = bytes_count(c);
+	bytes[b] = c;
+	b++;
+	if (b == a)
+	{
+		i = 0;
+		while (i < b)
+			write(1, &bytes[i++], 1);
+		a = 0;
+		b = 0;
+	}
 }
 
 void	signal_handler(int signal, siginfo_t *info, void *ctx)
@@ -56,7 +72,7 @@ void	signal_handler(int signal, siginfo_t *info, void *ctx)
 		if (curr_char == '\0')
 			kill(info->si_pid, SIGUSR1);
 		else
-			write(1, &curr_char, 1);
+			print_char_uni(curr_char, c_pid);
 		bit_i = 0;
 		curr_char = 0;
 	}

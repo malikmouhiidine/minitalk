@@ -6,7 +6,7 @@
 /*   By: mmouhiid <mmouhiid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 21:13:44 by mmouhiid          #+#    #+#             */
-/*   Updated: 2024/01/27 15:10:19 by mmouhiid         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:29:00 by mmouhiid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,18 @@ void	ft_putstr_fd(char *s, int fd)
 		return ;
 	while (*(s + i))
 		write(fd, (s + i++), 1);
+}
+
+int	bytes_count(unsigned char c)
+{
+	if (c >= 240)
+		return (4);
+	else if (c >= 224 && c < 240)
+		return (3);
+	else if (c >= 192 && c < 224)
+		return (2);
+	else
+		return (1);
 }
 
 void	exit_handler(void)
